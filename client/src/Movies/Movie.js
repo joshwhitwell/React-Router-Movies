@@ -1,35 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+//Import dependencies
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useParams, useRouteMatch } from 'react-router-dom'
 
+//Movie component
 export default function Movie(props) {
-  const [movie, setMovie] = useState();
+  
+  //Initialize state
+  const [movie, setMovie] = useState()
 
-  let id = 1;
-  // Change ^^^ that line and use a hook to obtain the :id parameter from the URL
+  //Destructures current id from router.provider
+  const { id } = useParams()
 
+  //Set Axios response to state on id change
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/movies/${id}`) // Study this endpoint with Postman
+      .get(`http://localhost:5000/api/movies/${id}`)
       .then(response => {
-        // Study this response with a breakpoint or log statements
-        // and set the response data as the 'movie' slice of state
+        setMovie(response.data)
       })
       .catch(error => {
-        console.error(error);
-      });
-    // This effect should run every time time
-    // the `id` changes... How could we do this?
-  }, []);
+        console.error(error)
+      })
+  }, [id])
 
   // Uncomment this only when you have moved on to the stretch goals
   // const saveMovie = evt => { }
 
+  //Renders loading message when state is null
   if (!movie) {
-    return <div>Loading movie information...</div>;
+    return <div>Loading movie information...</div>
   }
 
-  const { title, director, metascore, stars } = movie;
+  //Destructure movie state
+  const { title, director, metascore, stars } = movie
 
+  //Return Movie
   return (
     <div className="save-wrapper">
       <div className="movie-card">
@@ -42,13 +48,15 @@ export default function Movie(props) {
         </div>
         <h3>Actors</h3>
 
+        {/* Map over stars array and return star at each index */}
         {stars.map(star => (
           <div key={star} className="movie-star">
             {star}
           </div>
         ))}
+
       </div>
       <div className="save-button">Save</div>
     </div>
-  );
+  )
 }
