@@ -1,8 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+//Import dependencies
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
 
-import './index.css';
-import App from './App';
+//Import styles
+import './index.css'
 
-// You'll need to wrap <App /> for routing to work
-ReactDOM.render(<App />, document.getElementById('root'));
+//Import components
+import App from './App'
+
+//Render React App to root
+ReactDOM.render(
+
+    //Add router to app
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+    
+, document.getElementById('root'))
